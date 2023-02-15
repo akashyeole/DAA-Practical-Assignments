@@ -10,38 +10,61 @@
 
 using namespace std;
 
-#define ll long long int
-#define printv(v) for(auto i:v)cout<<i<<" ";cout<<endl;
-
+// Recursive function to find the maximum proft given knapsack capacity, weight and profit of each item.
+// Time complexity: O(2^n) (Exponential) Here, n is the number item available to pick.
+// Space Complexity: O(n) Auxiliary stack space since we are using recursion.
 int KnapSack01Recursion(int totalItems, int itemNumber, int currentCapacity, vector<int>& weights, vector<int>& profits){
+    
+    // If current tem number exceeds the actual number of item then return 0 profit.
     if(itemNumber >= totalItems) return 0;
-
+    
+    // Let the profit by skipping or selecting the current item be initially 0.
     int profitSelectingCurrentItem = 0, profitSkippingCurrentItem = 0;
 
+    // Selecting the current item only if fits in the knapsack.   
     if(weights[itemNumber] <= currentCapacity){
+        // Calling the recursion for the next item.
         profitSelectingCurrentItem = KnapSack01Recursion(totalItems, itemNumber+1, currentCapacity-weights[itemNumber], weights, profits) + profits[itemNumber];
     }
+    
+    // Skipping the current item regardless of what the weight and capacityt is.
+    // Calling the recursion for the next item.
     profitSkippingCurrentItem = KnapSack01Recursion(totalItems, itemNumber+1, currentCapacity, weights, profits);
-
+    
+    // Returning the maximum profit obained either by selecting or skipping the current item.
     return max(profitSelectingCurrentItem, profitSkippingCurrentItem);
 }
 
+// Dynamic programming approach to obtain the maximum profit.
+// Time complexity: O(n^2) (Quadratic) Here, n is the number item available to pick.
+// Space Complexity: O(n) Auxiliary stack space + O(n * m) DP table = O(n * m) Here n is the number of items and m is he capcity of knapsack.
 int KnapSack01Memoization(int totalItems, int itemNumber, int currentCapacity, vector<int>& weights, vector<int>& profits, vector<vector<int>>& dpArray){
+    
+    // If current tem number exceeds the actual number of item then return 0 profit.
     if(itemNumber >= totalItems) return 0;
 
+    // If the current state of recursion call is already stored in DP table, return the value of that state.
     if(dpArray[itemNumber][currentCapacity] != -1) return dpArray[itemNumber][currentCapacity];
 
+    // Let the profit by skipping or selecting the current item be initially 0.
     int profitSelectingCurrentItem = 0, profitSkippingCurrentItem = 0;
     
+    // Selecting the current item only if fits in the knapsack.
     if(weights[itemNumber] <= currentCapacity){
+        // Calling the recursion for the next item.
         profitSelectingCurrentItem = KnapSack01Memoization(totalItems, itemNumber+1, currentCapacity-weights[itemNumber], weights, profits, dpArray) + profits[itemNumber];
     }
+    
+    // Skipping the current item regardless of what the weight and capacityt is.
+    // Calling the recursion for the next item.
     profitSkippingCurrentItem = KnapSack01Memoization(totalItems, itemNumber+1, currentCapacity, weights, profits, dpArray);
-
+    
+    // Before returning the maximum profit, store the state result in the DP table.
     return dpArray[itemNumber][currentCapacity] = max(profitSelectingCurrentItem, profitSkippingCurrentItem);
 }
 
 int main(){
+    // Accepting the required data
     int numberOfItems;
     cout << "Enter number of items available to pick: ";
     cin >> numberOfItems;
@@ -55,7 +78,8 @@ int main(){
     cout << "Enter PROFITS of " << numberOfItems << " items separated by space: ";
     for(int i = 0; i < numberOfItems; i++) cin >> profits[i];
     cout << endl; 
-
+    
+    // Result of recursion
     clock_t start, end;
     start = clock();
     cout << "0/1 Knapsack Solution for given input(Brute Force Approach/Recursion): " << endl;
@@ -63,6 +87,7 @@ int main(){
     end = clock();
     cout << "Time Taken :" << double(end-start) / double(CLOCKS_PER_SEC) << setprecision(11) << "ms" << endl << endl;
 
+    // Result of DP approach
     start = clock();
     vector<vector<int>> dpArray(numberOfItems, vector<int>(capacityOfKnapSack+1, -1));
     cout << "0/1 Knapsack Solution for given input(Optimzed using Dynamic Programming): " << endl;
