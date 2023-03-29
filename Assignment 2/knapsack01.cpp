@@ -10,9 +10,6 @@
 
 using namespace std;
 
-#define ll long long int
-#define printv(v) for(auto i:v)cout<<i<<" ";cout<<endl;
-
 int KnapSack01Recursion(int totalItems, int itemNumber, int currentCapacity, vector<int>& weights, vector<int>& profits){
     if(itemNumber >= totalItems) return 0;
 
@@ -43,7 +40,7 @@ int KnapSack01Memoization(int totalItems, int itemNumber, int currentCapacity, v
 
 int main(){
     int numberOfItems;
-    cout << "Enter number of items available to pick: ";
+    cout << endl <<  "Enter number of items available to pick: ";
     cin >> numberOfItems;
     int capacityOfKnapSack;
     cout << "Enter capacity of Knapsack: ";
@@ -71,3 +68,7 @@ int main(){
     cout << "Time Taken: " << double(end-start) / double(CLOCKS_PER_SEC) << setprecision(11) << "ms" << endl << endl;
 
 }
+
+// Analysis:
+// Recursive solution takes O(2^n) time, there are 2 possibilites for each item (pick or don't pick)
+// Memoized solution takes O(n^2) time, because we are storing the result of the optimal substructure.
