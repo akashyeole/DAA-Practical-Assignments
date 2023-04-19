@@ -80,20 +80,18 @@ void TSPLCBB(int numberOfCities, vector<vector<int>>& costMatrix){
 }
 
 int main(){
-
+    clock_t start, end;
+    start = clock();    
+    
     // Default Test Cases:
     int numberOfCities = 5;
-    // vector<vector<int>> costMatrix ={   {INF, 7, 3, 12, 8}, 
-    //                                     {3, INF, 6, 14, 9}, 
-    //                                     {5, 8, INF, 6, 18}, 
-    //                                     {9, 3, 5, INF, 11}, 
-    //                                     {18, 14, 9, 8, INF}};
     vector<vector<int>> costMatrix ={   {INF, 20, 30, 10, 11}, 
                                         {15, INF, 16, 4, 2}, 
                                         {3, 5, INF, 2, 4}, 
                                         {19, 6, 18, INF, 3}, 
                                         {16, 4, 7, 16, INF}};
-
+                
+    // User Input:
     // int numberOfCities;
     // cout << "Enter number of cities: ";
     // cin >> numberOfCities;
@@ -110,5 +108,7 @@ int main(){
     // }
     TSPLCBB(numberOfCities, costMatrix);
 
+    end = clock();
+    cout << "Time Taken :" << double(end-start) / double(CLOCKS_PER_SEC) << setprecision(11) << "ms" << endl << endl;
     return 0;
 }

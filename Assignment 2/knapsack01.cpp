@@ -93,10 +93,7 @@ int main(){
     cout << "Time Taken: " << double(end-start) / double(CLOCKS_PER_SEC) << setprecision(11) << "ms" << endl << endl;
 
 }
-<<<<<<< HEAD
 
 // Analysis:
 // Recursive solution takes O(2^n) time, there are 2 possibilites for each item (pick or don't pick)
 // Memoized solution takes O(n^2) time, because we are storing the result of the optimal substructure.
-=======
->>>>>>> e0f80eae7bcced2b74748fab8c91e01ccb7fbe24
